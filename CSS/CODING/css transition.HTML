@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Transition Example</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+
+            /* Transition Effect */
+            transition: background-color 1s, transform 1s;
+        }
+
+        button:hover {
+            background-color: green;
+            transform: scale(1.2);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>CSS Transition Example</h1>
+
+    <button>Hover Me</button>
+
+</body>
+</html>
