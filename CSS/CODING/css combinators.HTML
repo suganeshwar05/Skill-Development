@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Combinators</title>
+
+    <style>
+
+        /* Descendant Combinator */
+        div p {
+            color: blue;
+        }
+
+        /* Child Combinator */
+        div > h2 {
+            color: green;
+        }
+
+        /* Adjacent Sibling Combinator */
+        h1 + p {
+            background-color: yellow;
+        }
+
+        /* General Sibling Combinator */
+        h3 ~ p {
+            font-size: 20px;
+            color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h2>Child Combinator Example</h2>
+
+        <p>Descendant Combinator Example</p>
+    </div>
+
+    <h1>Adjacent Sibling Example</h1>
+    <p>This paragraph comes immediately after h1.</p>
+
+    <h3>General Sibling Example</h3>
+    <p>First sibling paragraph.</p>
+    <p>Second sibling paragraph.</p>
+
+</body>
+</html>
