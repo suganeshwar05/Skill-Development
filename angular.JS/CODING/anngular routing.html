@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Routing Example</title>
+
+    <!-- AngularJS Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <!-- AngularJS Route Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+</head>
+
+<body>
+
+    <p>
+        <a href="#!/">Main</a>
+    </p>
+
+    <a href="#!banana">Banana</a><br>
+    <a href="#!tomato">Tomato</a>
+
+    <p>Click on the links to change the content.</p>
+
+    <p>
+        The HTML shown in the ng-view directive are written
+        in the template property of the $routeProvider.when method.
+    </p>
+
+    <!-- View Section -->
+    <div ng-view></div>
+
+    <script>
+        // Create AngularJS Module with ngRoute
+        var app = angular.module("myApp", ["ngRoute"]);
+
+        // Configure Routes
+        app.config(function($routeProvider) {
+
+            $routeProvider
+
+            .when("/", {
+                template: `
+                    <h1>Main</h1>
+                    <p>Click on the links to change this content</p>
+                `
+            })
+
+            .when("/banana", {
+                template: `
+                    <h1>Banana</h1>
+                    <p>Bananas contain potassium.</p>
+                `
+            })
+
+            .when("/tomato", {
+                template: `
+                    <h1>Tomato</h1>
+                    <p>Tomatoes are rich in vitamins.</p>
+                `
+            });
+
+        });
+    </script>
+
+</body>
+</html>
