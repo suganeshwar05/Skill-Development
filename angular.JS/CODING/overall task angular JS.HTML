@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jerseyApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jersey Store</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background: linear-gradient(to right, #000000, #001f4d, #0033cc);
+            min-height:100vh;
+            color:white;
+        }
+
+        /* Navbar */
+        nav{
+            background: rgba(0,0,0,0.7);
+            padding:15px;
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            position:sticky;
+            top:0;
+        }
+
+        nav a{
+            color:white;
+            text-decoration:none;
+            font-size:18px;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        nav a:hover{
+            color:#00ccff;
+        }
+
+        /* Sections */
+        section{
+            padding:60px 10%;
+            min-height:100vh;
+        }
+
+        h1{
+            margin-bottom:20px;
+            font-size:45px;
+        }
+
+        p{
+            line-height:1.8;
+            font-size:18px;
+        }
+
+        /* Home */
+        .home{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+        }
+
+        .home h1{
+            font-size:60px;
+        }
+
+        .home button{
+            margin-top:20px;
+            padding:12px 25px;
+            border:none;
+            background:#00ccff;
+            color:black;
+            font-size:18px;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        /* Product Cards */
+        .products-container{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+            gap:25px;
+            margin-top:30px;
+        }
+
+        .card{
+            background: rgba(255,255,255,0.1);
+            padding:15px;
+            border-radius:15px;
+            text-align:center;
+            backdrop-filter: blur(10px);
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:scale(1.05);
+        }
+
+        .card img{
+            width:100%;
+            height:250px;
+            object-fit:cover;
+            border-radius:10px;
+        }
+
+        .price{
+            color:#00ffcc;
+            margin:10px 0;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        button{
+            padding:10px 20px;
+            border:none;
+            background:#00ccff;
+            color:black;
+            border-radius:5px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+
+        button:hover{
+            background:white;
+        }
+
+        /* Cart */
+        .cart{
+            margin-top:40px;
+            background: rgba(255,255,255,0.1);
+            padding:20px;
+            border-radius:15px;
+        }
+
+        .cart-item{
+            display:flex;
+            justify-content:space-between;
+            margin:10px 0;
+        }
+
+        /* Contact Form */
+        form{
+            max-width:500px;
+            margin-top:20px;
+        }
+
+        input, textarea{
+            width:100%;
+            padding:12px;
+            margin:10px 0;
+            border:none;
+            border-radius:8px;
+        }
+
+        textarea{
+            resize:none;
+            height:120px;
+        }
+
+        footer{
+            text-align:center;
+            padding:20px;
+            background:rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+
+<body ng-controller="shopCtrl">
+
+    <!-- Navbar -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#services">Services</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Home -->
+    <section id="home" class="home">
+
+        <h1>⚽ Jersey Shopping Store</h1>
+
+        <p>
+            Buy Premium Football Jerseys of your favorite clubs.
+        </p>
+
+        <button onclick="document.getElementById('products').scrollIntoView()">
+            Shop Now
+        </button>
+
+    </section>
+
+    <!-- Products -->
+    <section id="products">
+
+        <h1>Products</h1>
+
+        <div class="products-container">
+
+            <div class="card"
+                 ng-repeat="jersey in jerseys">
+
+                <img ng-src="{{jersey.image}}" alt="Jersey">
+
+                <h2>{{jersey.name}}</h2>
+
+                <div class="price">
+                    ₹{{jersey.price}}
+                </div>
+
+                <button ng-click="addToCart(jersey)">
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Cart -->
+        <div class="cart">
+
+            <h2>🛒 Shopping Cart</h2>
+
+            <div class="cart-item"
+                 ng-repeat="item in cart">
+
+                <span>{{item.name}}</span>
+
+                <span>₹{{item.price}}</span>
+
+            </div>
+
+            <h3>Total: ₹{{getTotal()}}</h3>
+
+        </div>
+
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+
+        <h1>Services</h1>
+
+        <p>✔ Free Delivery on Orders Above ₹2000</p>
+        <p>✔ 24/7 Customer Support</p>
+        <p>✔ Easy Return Policy</p>
+        <p>✔ Premium Quality Jerseys</p>
+
+    </section>
+
+    <!-- About -->
+    <section id="about">
+
+        <h1>About Us</h1>
+
+        <p>
+            We are a premium jersey shopping platform providing
+            high-quality football jerseys from top clubs around the world.
+            Our goal is to deliver stylish and affordable sportswear
+            to football fans everywhere.
+        </p>
+
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+
+        <h1>Contact Us</h1>
+
+        <form>
+
+            <input type="text" placeholder="Enter your name">
+
+            <input type="email" placeholder="Enter your email">
+
+            <textarea placeholder="Enter your message"></textarea>
+
+            <button type="submit">
+                Send Message
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 Jersey Store | AngularJS Project
+    </footer>
+
+    <script>
+
+        // AngularJS App
+        var app = angular.module("jerseyApp", []);
+
+        // Controller
+        app.controller("shopCtrl", function($scope){
+
+            // Products
+            $scope.jerseys = [
+
+                {
+                    name:"Real Madrid Jersey",
+                    price:1999,
+                    image:"https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=500&q=80"
+                },
+
+                {
+                    name:"Barcelona Jersey",
+                    price:1899,
+                    image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=500&q=80"
+                },
+
+                {
+                    name:"Manchester United Jersey",
+                    price:2199,
+                    image:"https://images.unsplash.com/photo-1508098682722-e99c643e7485?auto=format&fit=crop&w=500&q=80"
+                },
+
+                {
+                    name:"PSG Jersey",
+                    price:1799,
+                    image:"https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=500&q=80"
+                }
+
+            ];
+
+            // Cart
+            $scope.cart = [];
+
+            // Add to Cart
+            $scope.addToCart = function(jersey){
+
+                $scope.cart.push(jersey);
+
+                alert(jersey.name + " added to cart!");
+
+            };
+
+            // Total
+            $scope.getTotal = function(){
+
+                var total = 0;
+
+                for(var i = 0; i < $scope.cart.length; i++){
+
+                    total += $scope.cart[i].price;
+
+                }
+
+                return total;
+            };
+
+        });
+
+    </script>
+
+</body>
+</html>
